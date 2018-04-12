@@ -75,6 +75,8 @@ void draw()
     rect(800, 00, 200, 200); //draw next button
     fill(255);
     text("NEXT > ", 850, 100); //draw next label
+    fill(255);
+    text("(Hint: Swipe watch \n screen to delete)", 725, 400);
 
     //my draw code
     //textAlign(CENTER);
@@ -136,7 +138,7 @@ void draw()
     textAlign(CENTER);
     text("tuv_", 200+3*sizeOfInputArea/6, 200+5*sizeOfInputArea/6);
     
-    //wxyz
+    //wxyz 
     fill(255);
     rect(200+2*sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
@@ -278,6 +280,16 @@ void mousePressed()
   }
 }
 
+void mouseDragged() 
+{
+  //delete
+  int length = currentTyped.length();
+
+  if (didMouseClick(200, 200, sizeOfInputArea, sizeOfInputArea) && 
+      length > 0) {
+    currentTyped = currentTyped.substring(0, length-1);
+  }
+}
 
 void nextTrial()
 {
