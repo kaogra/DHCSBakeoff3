@@ -19,6 +19,8 @@ final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
 //Variables for my silly implementation. You can delete this:
 char currentLetter = 'a';
 
+int buttonLastClicked = 0; //ID of button last clicked
+
 //You can modify anything in here. This is just a basic implementation.
 void setup()
 {
@@ -78,15 +80,15 @@ void draw()
     //textAlign(CENTER);
     //text("" + currentLetter, 200+sizeOfInputArea/2, 200+sizeOfInputArea/3); //draw current letter
     
-    //Enter - ''
+    //Enter ''
     fill(0, 255, 0);
     rect(200, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("Enter", 200+sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    text("Enter\n" +"\'" + currentLetter + "\'", 200+sizeOfInputArea/6, 200+sizeOfInputArea/6);
     
     //abc
-    fill(150);
+    fill(200);
     rect(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
@@ -100,7 +102,7 @@ void draw()
     text("def", 200+5*sizeOfInputArea/6, 200+sizeOfInputArea/6);
 
     //ghi
-    fill(150);
+    fill(200);
     rect(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw left red button
     fill(0);
     textAlign(CENTER);
@@ -114,7 +116,7 @@ void draw()
     text("jkl", 200+3*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
     
     //mno
-    fill(150);
+    fill(200);
     rect(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
@@ -127,12 +129,12 @@ void draw()
     textAlign(CENTER);
     text("pqrs", 200+sizeOfInputArea/6, 200+5*sizeOfInputArea/6);
     
-    //tuv
-    fill(150);
+    //tuv_
+    fill(200);
     rect(200+sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("tuv", 200+3*sizeOfInputArea/6, 200+5*sizeOfInputArea/6);
+    text("tuv_", 200+3*sizeOfInputArea/6, 200+5*sizeOfInputArea/6);
     
     //wxyz
     fill(255);
@@ -151,23 +153,10 @@ boolean didMouseClick(float x, float y, float w, float h) //simple function to d
 
 void mousePressed()
 {
-  /*
-  if (didMouseClick(200, 200+sizeOfInputArea/2, sizeOfInputArea/2, sizeOfInputArea/2)) //check if click in left button
-  {
-    currentLetter --;
-    if (currentLetter<'_') //wrap around to z
-      currentLetter = 'z';
-  }
-
-  if (didMouseClick(200+sizeOfInputArea/2, 200+sizeOfInputArea/2, sizeOfInputArea/2, sizeOfInputArea/2)) //check if click in right button
-  {
-    currentLetter ++;
-    if (currentLetter>'z') //wrap back to space (aka underscore)
-      currentLetter = '_';
-  }
-
-  if (didMouseClick(200, 200, sizeOfInputArea, sizeOfInputArea/2)) //check if click occured in letter area
-  {
+  //Enter clicked (ID:0)
+  if (didMouseClick(200, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonLastClicked = 0;
+    
     if (currentLetter=='_') //if underscore, consider that a space bar
       currentTyped+=" ";
     else if (currentLetter=='`' & currentTyped.length()>0) //if `, treat that as a delete command
@@ -175,7 +164,112 @@ void mousePressed()
     else if (currentLetter!='`') //if not any of the above cases, add the current letter to the typed string
       currentTyped+=currentLetter;
   }
-  */
+  
+  //'abc' clicked (ID:1)
+  if (didMouseClick(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    if (buttonLastClicked == 1) {
+      currentLetter++;
+      if (currentLetter>'c') //wrap back to 'a'
+      currentLetter = 'a';
+    } else {
+      currentLetter = 'a';
+    }
+
+    buttonLastClicked = 1;
+  }
+  
+   //'def' clicked (ID:2)
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 2) {
+      currentLetter++;
+      if (currentLetter>'f') //wrap back to 'd'
+      currentLetter = 'd';
+    } else {
+      currentLetter = 'd';
+    }
+
+    buttonLastClicked = 2;
+  }
+  
+   //'ghi' clicked (ID:3)
+  if (didMouseClick(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 3) {
+      currentLetter++;
+      if (currentLetter>'i') //wrap back to 'g'
+      currentLetter = 'g';
+    } else {
+      currentLetter = 'g';
+    }
+
+    buttonLastClicked = 3;
+  }
+  
+   //'jkl' clicked (ID:4)
+  if (didMouseClick(200+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 4) {
+      currentLetter++;
+      if (currentLetter>'l') //wrap back to 'j'
+      currentLetter = 'j';
+    } else {
+      currentLetter = 'j';
+    }
+
+    buttonLastClicked = 4;
+  }
+  
+   //'mno' clicked (ID:5)
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 5) {
+      currentLetter++;
+      if (currentLetter>'o') //wrap back to 'm'
+      currentLetter = 'm';
+    } else {
+      currentLetter = 'm';
+    }
+
+    buttonLastClicked = 5;
+  }
+  
+   //'pqrs' clicked (ID:6)
+  if (didMouseClick(200, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 6) {
+      currentLetter++;
+      if (currentLetter>'s') //wrap back to 'p'
+        currentLetter = 'p';
+    } else {
+      currentLetter = 'p';
+    }
+
+    buttonLastClicked = 6;
+  }
+  
+    //'tuv_' clicked (ID: 7)
+  if (didMouseClick(200+sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 7) {
+      currentLetter++;
+      if (currentLetter <'a') //wrap back to 't'
+        currentLetter = 't';  
+      else if (currentLetter > 'v') //jump to '_'
+        currentLetter = '_';
+    } else {
+      currentLetter = 't';
+    }
+
+    buttonLastClicked = 7;
+  }
+  
+   //'wxyz' clicked (ID:8)
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     if (buttonLastClicked == 8) {
+      currentLetter++;
+      if (currentLetter>'z') //wrap back to space (aka underscore)
+      currentLetter = 'w';
+    } else {
+      currentLetter = 'w';
+    }
+
+    buttonLastClicked = 8;
+  }
 
   //You are allowed to have a next button outside the 2" area
   if (didMouseClick(800, 00, 200, 200)) //check if click is in next button
