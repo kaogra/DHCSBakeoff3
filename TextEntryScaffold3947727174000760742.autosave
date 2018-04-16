@@ -20,10 +20,6 @@ final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
 char currentLetter = 'a';
 
 int buttonLastClicked = 0; //ID of button last clicked
-int pressedLocX = 0;
-int pressedLocY = 0;
-int releasedLocX = 0;
-int releasedLocY = 0;
 
 //You can modify anything in here. This is just a basic implementation.
 void setup()
@@ -275,24 +271,12 @@ void mousePressed()
 
     buttonLastClicked = 8;
   }
-  
-  pressedLocX = mouseX;
-  pressedLocY = mouseY;
 
   //You are allowed to have a next button outside the 2" area
-  if (didMouseClick(800, 00, 200, 200)) //check if click is in next button
+  if (didMouseClick(200, 650, 200, 200)) //check if click is in next button
   {
     nextTrial(); //if so, advance to next trial
   }
-}
-
-void mouseReleased() 
-{
-  releasedLocX = mouseX;
-  releasedLocY = mouseY;
-  deleteStr();
-  pressedLocX = mouseX;
-  pressedLocY = mouseY;
 }
 
 boolean didMouseSwipe(float x, float y, float w, float h) {
@@ -300,26 +284,15 @@ boolean didMouseSwipe(float x, float y, float w, float h) {
          ((pmouseX - mouseX) > (sizeOfInputArea/3));
 }
 
-void deleteStr()
-{
-  int length = currentTyped.length();
-  println(releasedLocX - pressedLocX);
-  
-  if (releasedLocX - pressedLocX < -(sizeOfInputArea/3) && 
-      length > 0) {
-    currentTyped = currentTyped.substring(0, length-1);
-  }
-}
-
 void mouseDragged() 
 {
   //delete
-  // int length = currentTyped.length();
+  int length = currentTyped.length();
 
-  // if (didMouseSwipe(200, 200, sizeOfInputArea, sizeOfInputArea) && 
-  //     length > 0) {
-  //  currentTyped = currentTyped.substring(0, length-1);
-  //}
+  if (didMouseSwipe(200, 200, sizeOfInputArea, sizeOfInputArea) && 
+      length > 0) {
+    currentTyped = currentTyped.substring(0, length-1);
+  }
 }
 
 void nextTrial()
