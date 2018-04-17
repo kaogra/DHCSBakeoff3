@@ -33,7 +33,7 @@ void setup()
 
   orientation(PORTRAIT); //can also be LANDSCAPE -- sets orientation on android device
   size(540, 960); //Sets the size of the app. You may want to modify this to your device. Many phones today are 1080 wide by 1920 tall.
-  textFont(createFont("Arial", 24)); //set the font to arial 24
+  textFont(createFont("Arial", 20)); //set the font to arial 24
   noStroke(); //my code doesn't use any strokes.
 }
 
@@ -44,7 +44,7 @@ void draw()
 
   // image(watch,-200,200);
   fill(100);
-  rect(200, 200, sizeOfInputArea, sizeOfInputArea); //input area should be 2" by 2"
+  rect(130, 200, sizeOfInputArea, sizeOfInputArea); //input area should be 2" by 2"
 
   if (finishTime!=0)
   {
@@ -71,14 +71,20 @@ void draw()
     //you will need something like the next 10 lines in your code. Output does not have to be within the 2 inch area!
     textAlign(LEFT); //align the text left
     fill(128);
-    text("Phrase " + (currTrialNum+1) + " of " + totalTrialNum, 70, 50); //draw the trial count
+    text("Phrase " + (currTrialNum+1) + " of " + totalTrialNum, 300, 50); //draw the trial count
+    fill(128);
+    text("Target:   ", 50, 150); //draw the target string
     fill(255);
-    text("Target:   " + currentPhrase, 70, 100); //draw the target string
-    text("Entered:  " + currentTyped +"|", 70, 140); //draw what the user has entered thus far 
-    fill(255, 0, 0);
-    rect(200, 650, 200, 200); //draw next button
+    text(currentPhrase, 130, 150);
+    fill(128);
+    text("Entered:  ", 50, 180); //draw what the user has entered thus far 
+    text(currentTyped +"|", 130, 180);
+
+    
+    fill(0, 255, 0, 100);
+    rect(0, 0, 200, 70); //draw next button
     fill(255);
-    text("NEXT > ", 200, 650); //draw next label
+    text("NEXT > ", 50, 50); //draw next label
     fill(255);
     text("(Hint: Swipe watch \n screen to delete)", 725, 400);
 
@@ -86,48 +92,52 @@ void draw()
     //textAlign(CENTER);
     //text("" + currentLetter, 200+sizeOfInputArea/2, 200+sizeOfInputArea/3); //draw current letter
     
+    //Space
+    fill(200);
+    rect(130, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    fill(0);
+    textAlign(CENTER);
+    text("space", 130+sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    
     //Enter ''
-    fill(0, 255, 0);
-    rect(200, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
-    fill(0);
-    textAlign(CENTER);
-    text("Enter\n" +"\'" + currentLetter + "\'", 200+sizeOfInputArea/6, 200+sizeOfInputArea/6);
-    
-    //abc
-    fill(200);
-    rect(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
-    fill(0);
-    textAlign(CENTER);
-    text("abc", 200+3*sizeOfInputArea/6, 200+sizeOfInputArea/6);
-    
-    //def
     fill(255);
-    rect(200+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    rect(130+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("def", 200+5*sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    text("" + currentLetter, 130+3*sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    
+    //Delete
+    fill(200);
+    rect(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    fill(0);
+    textAlign(CENTER);
+    text("delete", 130+5*sizeOfInputArea/6, 200+sizeOfInputArea/6);
 
-    //ghi
-    fill(200);
-    rect(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw left red button
-    fill(0);
-    textAlign(CENTER);
-    text("ghi", 200+sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
-    
-    //jkl
+    //qweasdzxc
     fill(255);
-    rect(200+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    rect(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); 
     fill(0);
     textAlign(CENTER);
-    text("jkl", 200+3*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+    text("q   w   e\na   s   d\nz   x   c", 
+      130+sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
     
-    //mno
-    fill(200);
-    rect(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    //rtyfghvbn
+    fill(255);
+    rect(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("mno", 200+5*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+    text("r   t   y\nf   g   h\nv   b   n", 
+      130+3*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
     
+    //uiojklmp
+    fill(255);
+    rect(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); //draw right green button
+    fill(0);
+    textAlign(CENTER);
+    text("u   i   o\nj   k   l\nm      p", 
+      130+5*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+    
+    /*
     //pqrs
     fill(255);
     rect(200, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
@@ -147,7 +157,8 @@ void draw()
     rect(200+2*sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("wxyz", 200+5*sizeOfInputArea/6, 200+5*sizeOfInputArea/6);
+    text("wxyz", 200+5*sizeOfInputArea/6, 200+5*sizeOfInputArea/6); 
+    */
   }
 }
 
@@ -156,48 +167,30 @@ boolean didMouseClick(float x, float y, float w, float h) //simple function to d
   return (mouseX > x && mouseX<x+w && mouseY>y && mouseY<y+h); //check to see if it is in button bounds
 }
 
+void enterChar() {
+  if (currentLetter=='_') //if underscore, consider that a space bar
+      currentTyped+=" ";
+  else //if not any of the above cases, add the current letter to the typed string
+      currentTyped+=currentLetter;
+}
+
 void mousePressed()
 {  
-  //Enter clicked (ID:0)
-  if (didMouseClick(200, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  //Space clicked (ID:0)
+  if (didMouseClick(130, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
     buttonLastClicked = 0;
-    
-    if (currentLetter=='_') //if underscore, consider that a space bar
-      currentTyped+=" ";
-    else if (currentLetter=='`' & currentTyped.length()>0) //if `, treat that as a delete command
-      currentTyped = currentTyped.substring(0, currentTyped.length()-1);
-    else if (currentLetter!='`') //if not any of the above cases, add the current letter to the typed string
-      currentTyped+=currentLetter;
+    currentLetter = '_';
+    enterChar();
   }
   
-  //'abc' clicked (ID:1)
-  if (didMouseClick(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    if (buttonLastClicked == 1) {
-      currentLetter++;
-      if (currentLetter>'c') //wrap back to 'a'
-      currentLetter = 'a';
-    } else {
-      currentLetter = 'a';
-    }
-
-    buttonLastClicked = 1;
+   //Delete clicked (ID:2)
+  if (didMouseClick(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+     deleteStr();
+     buttonLastClicked = 2;
   }
   
-   //'def' clicked (ID:2)
-  if (didMouseClick(200+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
-     if (buttonLastClicked == 2) {
-      currentLetter++;
-      if (currentLetter>'f') //wrap back to 'd'
-      currentLetter = 'd';
-    } else {
-      currentLetter = 'd';
-    }
-
-    buttonLastClicked = 2;
-  }
-  
-   //'ghi' clicked (ID:3)
-  if (didMouseClick(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  //'ghi' clicked (ID:3)
+  if (didMouseClick(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
      if (buttonLastClicked == 3) {
       currentLetter++;
       if (currentLetter>'i') //wrap back to 'g'
@@ -207,10 +200,13 @@ void mousePressed()
     }
 
     buttonLastClicked = 3;
+
+    enterChar();
+
   }
   
    //'jkl' clicked (ID:4)
-  if (didMouseClick(200+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  if (didMouseClick(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
      if (buttonLastClicked == 4) {
       currentLetter++;
       if (currentLetter>'l') //wrap back to 'j'
@@ -220,10 +216,12 @@ void mousePressed()
     }
 
     buttonLastClicked = 4;
+    
+    enterChar();
   }
   
    //'mno' clicked (ID:5)
-  if (didMouseClick(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  if (didMouseClick(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
      if (buttonLastClicked == 5) {
       currentLetter++;
       if (currentLetter>'o') //wrap back to 'm'
@@ -233,8 +231,10 @@ void mousePressed()
     }
 
     buttonLastClicked = 5;
+    enterChar();
   }
   
+  /*
    //'pqrs' clicked (ID:6)
   if (didMouseClick(200, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
      if (buttonLastClicked == 6) {
@@ -275,12 +275,13 @@ void mousePressed()
 
     buttonLastClicked = 8;
   }
+  */
   
   pressedLocX = mouseX;
   pressedLocY = mouseY;
 
   //You are allowed to have a next button outside the 2" area
-  if (didMouseClick(800, 00, 200, 200)) //check if click is in next button
+  if (didMouseClick(0, 0, 200, 70)) //check if click is in next button
   {
     nextTrial(); //if so, advance to next trial
   }
@@ -288,9 +289,12 @@ void mousePressed()
 
 void mouseReleased() 
 {
+  /*for (int i = 0; i < 9; i++) {
+    activeButton[i] = false; 
+  }*/
   releasedLocX = mouseX;
   releasedLocY = mouseY;
-  deleteStr();
+  getDirection();
   pressedLocX = mouseX;
   pressedLocY = mouseY;
 }
@@ -303,23 +307,68 @@ boolean didMouseSwipe(float x, float y, float w, float h) {
 void deleteStr()
 {
   int length = currentTyped.length();
-  println(releasedLocX - pressedLocX);
   
-  if (releasedLocX - pressedLocX < -(sizeOfInputArea/3) && 
-      length > 0) {
+  if (length > 0) {
     currentTyped = currentTyped.substring(0, length-1);
   }
 }
 
+String getDirection()
+{
+  // int length = currentTyped.length();
+  String dir = "";
+  //println(releasedLocX - pressedLocX);
+  
+  if (releasedLocY - pressedLocY < -(sizeOfInputArea/4)) {
+    dir = dir + "U";
+  }
+  if (releasedLocY - pressedLocY > (sizeOfInputArea/4)) {
+    dir = dir + "D";
+  }
+  if (releasedLocX - pressedLocX < -(sizeOfInputArea/4)) {
+    dir = dir + "L";
+  }
+  if (releasedLocX - pressedLocX > (sizeOfInputArea/4)) {
+    dir = dir + "R" ;
+  }
+
+  println(dir);
+  return dir;
+}
+
 void mouseDragged() 
 {
-  //delete
-  // int length = currentTyped.length();
-
-  // if (didMouseSwipe(200, 200, sizeOfInputArea, sizeOfInputArea) && 
-  //     length > 0) {
-  //  currentTyped = currentTyped.substring(0, length-1);
-  //}
+  int buttonID = 10;
+  if (didMouseClick(200, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 0;
+  }
+  if (didMouseClick(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 1;
+  }
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 2;
+  }
+  if (didMouseClick(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 3;
+  }
+  if (didMouseClick(200+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 4;
+  }
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 5;
+  }
+  if (didMouseClick(200, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 6;
+  }
+  if (didMouseClick(200+sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 7;
+  }
+  if (didMouseClick(200+2*sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
+    buttonID = 8;
+  }
+  for (int i = 0; i < 9; i++) {
+    //activeButton[i] = (i == buttonID); 
+  }
 }
 
 void nextTrial()
