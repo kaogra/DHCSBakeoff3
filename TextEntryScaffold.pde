@@ -98,50 +98,51 @@ void draw()
     //textAlign(CENTER);
     //text("" + currentLetter, 200+sizeOfInputArea/2, 200+sizeOfInputArea/3); //draw current letter
     
-    //Space
-    fill(200);
-    rect(130, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
-    fill(0);
-    textAlign(CENTER);
-    text("space", 130+sizeOfInputArea/6, 200+sizeOfInputArea/6);
-    
     //Enter ''
     fill(255);
-    rect(130+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    rect(130, 200, 2*sizeOfInputArea/3, sizeOfInputArea/4); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("" + currentLetter, 130+3*sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    text("" + currentLetter, 130+2*sizeOfInputArea/6, 200+sizeOfInputArea/8);
     
     //Delete
     fill(200);
-    rect(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3); //draw right green button
+    rect(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/4); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("delete", 130+5*sizeOfInputArea/6, 200+sizeOfInputArea/6);
+    text("delete", 130+5*sizeOfInputArea/6, 200+sizeOfInputArea/8);
 
     //qweasdzxc
     fill(255);
-    rect(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); 
+    rect(130, 200+sizeOfInputArea/4, sizeOfInputArea/3, sizeOfInputArea/2); 
     fill(0);
     textAlign(CENTER);
     text("q   w   e\na   s   d\nz   x   c", 
-      130+sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+      130+sizeOfInputArea/6, 200+3*sizeOfInputArea/6-sizeOfInputArea/12);
     
     //rtyfghvbn
-    fill(255);
-    rect(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); //draw right green button
+    fill(240);
+    rect(130+sizeOfInputArea/3, 200+sizeOfInputArea/4, sizeOfInputArea/3, sizeOfInputArea/2); //draw right green button
     fill(0);
     textAlign(CENTER);
     text("r   t   y\nf   g   h\nv   b   n", 
-      130+3*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+      130+3*sizeOfInputArea/6, 200+3*sizeOfInputArea/6-sizeOfInputArea/12);
     
     //uiojklmp
     fill(255);
-    rect(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); //draw right green button
+    rect(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/4, sizeOfInputArea/3, sizeOfInputArea/2); //draw right green button
     fill(0);
     textAlign(CENTER);
     text("u   i   o\nj   k   l\nm  p    ", 
-      130+5*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
+      130+5*sizeOfInputArea/6, 200+3*sizeOfInputArea/6-sizeOfInputArea/12);
+      
+    //Space
+    fill(200);
+    rect(130, 200+3*sizeOfInputArea/3-sizeOfInputArea/6, sizeOfInputArea, sizeOfInputArea/4); 
+    fill(0);
+    textAlign(CENTER);
+    text("space", 130+sizeOfInputArea/2, 200+3*sizeOfInputArea/3);
+    
     
     /*
     //pqrs
