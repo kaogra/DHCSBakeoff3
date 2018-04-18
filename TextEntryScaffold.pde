@@ -15,6 +15,7 @@ String currentTyped = ""; //what the user has typed so far
 final int DPIofYourDeviceScreen = 245; //you will need to look up the DPI or PPI of your device to make sure you get the right scale!!
 //http://en.wikipedia.org/wiki/List_of_displays_by_pixel_density
 final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
+boolean okToStart = false;
 
 //Variables for my silly implementation. You can delete this:
 char currentLetter = 'a';
@@ -32,7 +33,7 @@ void setup()
   Collections.shuffle(Arrays.asList(phrases)); //randomize the order of the phrases
 
   orientation(PORTRAIT); //can also be LANDSCAPE -- sets orientation on android device
-  size(540, 960); //Sets the size of the app. You may want to modify this to your device. Many phones today are 1080 wide by 1920 tall.
+  size(540, 960, P2D); //Sets the size of the app. You may want to modify this to your device. Many phones today are 1080 wide by 1920 tall.
   textFont(createFont("Arial", 20)); //set the font to arial 24
   noStroke(); //my code doesn't use any strokes.
 }
@@ -63,7 +64,12 @@ void draw()
 
   if (startTime==0 & mousePressed)
   {
-    nextTrial(); //start the trials!
+    okToStart = true;
+  }
+  
+  if (!mousePressed && okToStart) {
+      nextTrial(); //start the trials!
+      okToStart = false;
   }
 
   if (startTime!=0)
@@ -134,7 +140,7 @@ void draw()
     rect(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, 2*sizeOfInputArea/3); //draw right green button
     fill(0);
     textAlign(CENTER);
-    text("u   i   o\nj   k   l\nm      p", 
+    text("u   i   o\nj   k   l\nm  p    ", 
       130+5*sizeOfInputArea/6, 200+3*sizeOfInputArea/6);
     
     /*
@@ -162,9 +168,9 @@ void draw()
   }
 }
 
-boolean didMouseClick(float x, float y, float w, float h) //simple function to do hit testing
+boolean didMouseClick(float x, float y, float w, float h, float checkx, float checky) //simple function to do hit testing
 {
-  return (mouseX > x && mouseX<x+w && mouseY>y && mouseY<y+h); //check to see if it is in button bounds
+  return (checkx > x && checkx<x+w && checky>y && checky<y+h); //check to see if it is in button bounds
 }
 
 void enterChar() {
@@ -177,61 +183,22 @@ void enterChar() {
 void mousePressed()
 {  
   //Space clicked (ID:0)
-  if (didMouseClick(130, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  if (didMouseClick(130, 200, sizeOfInputArea/3, sizeOfInputArea/3, mouseX, mouseY)) {
     buttonLastClicked = 0;
     currentLetter = '_';
     enterChar();
   }
   
+  // enter clicked (ID:1)
+  if (didMouseClick(130+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3, mouseX, mouseY)) {
+    enterChar();
+    buttonLastClicked = 1;
+  }
+  
    //Delete clicked (ID:2)
-  if (didMouseClick(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
+  if (didMouseClick(130+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3, mouseX, mouseY)) {
      deleteStr();
      buttonLastClicked = 2;
-  }
-  
-  //'ghi' clicked (ID:3)
-  if (didMouseClick(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-     if (buttonLastClicked == 3) {
-      currentLetter++;
-      if (currentLetter>'i') //wrap back to 'g'
-      currentLetter = 'g';
-    } else {
-      currentLetter = 'g';
-    }
-
-    buttonLastClicked = 3;
-
-    enterChar();
-
-  }
-  
-   //'jkl' clicked (ID:4)
-  if (didMouseClick(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-     if (buttonLastClicked == 4) {
-      currentLetter++;
-      if (currentLetter>'l') //wrap back to 'j'
-      currentLetter = 'j';
-    } else {
-      currentLetter = 'j';
-    }
-
-    buttonLastClicked = 4;
-    
-    enterChar();
-  }
-  
-   //'mno' clicked (ID:5)
-  if (didMouseClick(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-     if (buttonLastClicked == 5) {
-      currentLetter++;
-      if (currentLetter>'o') //wrap back to 'm'
-      currentLetter = 'm';
-    } else {
-      currentLetter = 'm';
-    }
-
-    buttonLastClicked = 5;
-    enterChar();
   }
   
   /*
@@ -281,7 +248,7 @@ void mousePressed()
   pressedLocY = mouseY;
 
   //You are allowed to have a next button outside the 2" area
-  if (didMouseClick(0, 0, 200, 70)) //check if click is in next button
+  if (didMouseClick(0, 0, 200, 70, mouseX, mouseY)) //check if click is in next button
   {
     nextTrial(); //if so, advance to next trial
   }
@@ -292,11 +259,91 @@ void mouseReleased()
   /*for (int i = 0; i < 9; i++) {
     activeButton[i] = false; 
   }*/
+  int PpressedLocX = pressedLocX;
+  int PpressedLocY = pressedLocY;
   releasedLocX = mouseX;
   releasedLocY = mouseY;
-  getDirection();
+  String dir = getDirection(releasedLocX, releasedLocY);
   pressedLocX = mouseX;
   pressedLocY = mouseY;
+  
+  
+    //'ghi' clicked (ID:3)
+  if (didMouseClick(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3, PpressedLocX, PpressedLocY)) {
+     if (dir == "U") {
+       currentLetter = 'w';
+     } else if (dir == "L") {
+       currentLetter = 'a';
+     } else if (dir == "R") {
+       currentLetter = 'd'; 
+     } else if (dir == "D") {
+       currentLetter = 'x';
+     } else if (dir == "UL") {
+       currentLetter = 'q';
+     } else if (dir == "UR") {
+       currentLetter = 'e';
+     } else if (dir == "DL") {
+       currentLetter = 'z';
+     } else if (dir == "DR") {
+       currentLetter = 'c';
+     } else {
+       currentLetter = 's' ;
+     }
+
+    buttonLastClicked = 3;
+
+    enterChar();
+  } else 
+  if (didMouseClick(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, 
+      sizeOfInputArea/3, sizeOfInputArea/3, PpressedLocX, PpressedLocY)) {
+     if (dir == "U") {
+       currentLetter = 't';
+     } else if (dir == "L") {
+       currentLetter = 'f';
+     } else if (dir == "R") {
+       currentLetter = 'h'; 
+     } else if (dir == "D") {
+       currentLetter = 'b';
+     } else if (dir == "UL") {
+       currentLetter = 'r';
+     } else if (dir == "UR") {
+       currentLetter = 'y';
+     } else if (dir == "DL") {
+       currentLetter = 'v';
+     } else if (dir == "DR") {
+       currentLetter = 'n';
+     } else {
+       currentLetter = 'g' ;
+     }
+
+    buttonLastClicked = 4;
+    
+    enterChar();
+  } else 
+  if (didMouseClick(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3,
+      sizeOfInputArea/3, sizeOfInputArea/3, PpressedLocX, PpressedLocY)) {
+     if (dir == "U") {
+       currentLetter = 'i';
+     } else if (dir == "L") {
+       currentLetter = 'j';
+     } else if (dir == "R") {
+       currentLetter = 'l'; 
+     } else if (dir == "UL") {
+       currentLetter = 'u';
+     } else if (dir == "UR") {
+       currentLetter = 'o';
+     } else if (dir == "DL") {
+       currentLetter = 'm';
+     } else if (dir == "D") {
+       currentLetter = 'p';
+     } else if (dir == "DR") {
+       currentLetter = 'p';
+     } else {
+       currentLetter = 'k' ;
+     }
+    buttonLastClicked = 5;
+    enterChar();
+  }
 }
 
 boolean didMouseSwipe(float x, float y, float w, float h) {
@@ -313,61 +360,115 @@ void deleteStr()
   }
 }
 
-String getDirection()
+String getDirection(float xcoord, float ycoord)
 {
-  // int length = currentTyped.length();
   String dir = "";
-  //println(releasedLocX - pressedLocX);
+  float detectionRange = sizeOfInputArea/8;
   
-  if (releasedLocY - pressedLocY < -(sizeOfInputArea/4)) {
-    dir = dir + "U";
+  if (xcoord - pressedLocX < -(detectionRange/2) && 
+      ycoord - pressedLocY < -(detectionRange/2)) {
+        dir = "UL";
+  } else
+  if (xcoord - pressedLocX > (detectionRange/2) && 
+      ycoord - pressedLocY < -(detectionRange/2)) {
+        dir = "UR";
+  }  else 
+  if (xcoord - pressedLocX > (detectionRange/2) && 
+      ycoord - pressedLocY > (detectionRange/2)) {
+        dir = "DR";
+  } else
+  if (xcoord - pressedLocX < -(detectionRange/2) && 
+      ycoord - pressedLocY > (detectionRange/2)) {
+        dir = "DL";
+  } else
+  if (ycoord - pressedLocY < -(detectionRange)) {
+    dir = "U";
+  } else 
+  if (ycoord - pressedLocY > (detectionRange)) {
+    dir = "D";
+  } else
+  if (xcoord - pressedLocX < -(detectionRange)) {
+    dir = "L";
+  } else
+  if (xcoord - pressedLocX > (detectionRange)) {
+    dir ="R" ;
   }
-  if (releasedLocY - pressedLocY > (sizeOfInputArea/4)) {
-    dir = dir + "D";
-  }
-  if (releasedLocX - pressedLocX < -(sizeOfInputArea/4)) {
-    dir = dir + "L";
-  }
-  if (releasedLocX - pressedLocX > (sizeOfInputArea/4)) {
-    dir = dir + "R" ;
-  }
-
-  println(dir);
+  
+  //println(dir);
   return dir;
 }
 
 void mouseDragged() 
 {
-  int buttonID = 10;
-  if (didMouseClick(200, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 0;
-  }
-  if (didMouseClick(200+sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 1;
-  }
-  if (didMouseClick(200+2*sizeOfInputArea/3, 200, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 2;
-  }
-  if (didMouseClick(200, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 3;
-  }
-  if (didMouseClick(200+sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 4;
-  }
-  if (didMouseClick(200+2*sizeOfInputArea/3, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 5;
-  }
-  if (didMouseClick(200, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 6;
-  }
-  if (didMouseClick(200+sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 7;
-  }
-  if (didMouseClick(200+2*sizeOfInputArea/3, 200+2*sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3)) {
-    buttonID = 8;
-  }
-  for (int i = 0; i < 9; i++) {
-    //activeButton[i] = (i == buttonID); 
+  //int buttonID = 10;
+  String dir = getDirection(mouseX, mouseY);
+
+  if (didMouseClick(130, 200+sizeOfInputArea/3, sizeOfInputArea/3, sizeOfInputArea/3, pressedLocX, pressedLocY)) {
+     if (dir == "U") {
+       currentLetter = 'w';
+     } else if (dir == "L") {
+       currentLetter = 'a';
+     } else if (dir == "R") {
+       currentLetter = 'd'; 
+     } else if (dir == "D") {
+       currentLetter = 'x';
+     } else if (dir == "UL") {
+       currentLetter = 'q';
+     } else if (dir == "UR") {
+       currentLetter = 'e';
+     } else if (dir == "DL") {
+       currentLetter = 'z';
+     } else if (dir == "DR") {
+       currentLetter = 'c';
+     } else {
+       currentLetter = 's' ;
+     }
+  } else
+  if (didMouseClick(130+sizeOfInputArea/3, 200+sizeOfInputArea/3, 
+      sizeOfInputArea/3, sizeOfInputArea/3, pressedLocX, pressedLocY)) {
+     //buttonID = 4;
+     if (dir == "U") {
+       currentLetter = 't';
+     } else if (dir == "L") {
+       currentLetter = 'f';
+     } else if (dir == "R") {
+       currentLetter = 'h'; 
+     } else if (dir == "D") {
+       currentLetter = 'b';
+     } else if (dir == "UL") {
+       currentLetter = 'r';
+     } else if (dir == "UR") {
+       currentLetter = 'y';
+     } else if (dir == "DL") {
+       currentLetter = 'v';
+     } else if (dir == "DR") {
+       currentLetter = 'n';
+     } else {
+       currentLetter = 'g' ;
+     }
+  } else
+  if (didMouseClick(130+2*sizeOfInputArea/3, 200+sizeOfInputArea/3,
+      sizeOfInputArea/3, sizeOfInputArea/3, pressedLocX, pressedLocY)) {
+     //buttonID = 5;
+     if (dir == "U") {
+       currentLetter = 'i';
+     } else if (dir == "L") {
+       currentLetter = 'j';
+     } else if (dir == "R") {
+       currentLetter = 'l'; 
+     } else if (dir == "UL") {
+       currentLetter = 'u';
+     } else if (dir == "UR") {
+       currentLetter = 'o';
+     } else if (dir == "DL") {
+       currentLetter = 'm';
+     } else if (dir == "D") {
+       currentLetter = 'p';
+     } else if (dir == "DR") {
+       currentLetter = 'p';
+     } else {
+       currentLetter = 'k' ;
+     }
   }
 }
 
